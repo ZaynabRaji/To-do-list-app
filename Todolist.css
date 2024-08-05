@@ -7,14 +7,22 @@
 .addtask {
   display: flex;
   align-items: center;
-  justif-content: space-between;
+  justify-content: space-between;
 }
 button {
-  padding: 0, 5em;
+  padding: 1em;
   background-color: #0084ff;
-  color: #fff;
+  color: black;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   }
 
+.Task-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Edit-button, .Delete-button {
+  cursor: pointer
+}
