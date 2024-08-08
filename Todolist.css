@@ -1,28 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-* {
-  margin: 10;
-  padding: 10;
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
   font-family: "Poppins", sans-serif;
 }
-.addtask {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-button {
-  padding: 1em;
-  background-color: #0084ff;
-  color: black;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  }
 
-.Task-item{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+button {
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 1em;
+  cursor: pointer;
+  margin-left: 2em;
+  padding: 1em;
 }
-.Edit-button, .Delete-button {
-  cursor: pointer
+#todoInput{
+  padding: 1em;
+ }
+
+@media screen and (max-width: 322PX) {
+  body {
+    background-color: 0084FF;
+    /* filter: brightness(16%); */
+  }
 }

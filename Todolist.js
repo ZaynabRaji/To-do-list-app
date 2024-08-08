@@ -1,45 +1,56 @@
+// Select elements
+const todoForm = document.querySelector('form');
+const todoInput = document.getElementById('todoInput');
+const todosContainer = document.getElementById('todosContainer');
 
-function addtask(event) {
-    event.preventdefault(); // block the page from refreshing
-    addtask();
-    const from = document.querySelector("form");
-    from.addEventListener("submit", addtask);
+// Array to store to-dos
+let todos = [];
 
-    const taskinput = document.queryselector('#task'); // or we can use document.getElementById("task");
-    const tasktext = taskinput.value.trim(); // trim remove white spaces
-    if (tasktext !== "") {
-        var taskitem = document.createElement("div");
-        taskitem.className = "Task-item";
-        var taskvalue = document.createElement("textarea");
-        taskvalue.textContent = tasktext;
+// Event listener for form submission
+todoForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    addTodo();
+});
 
-        var editbutton = document.createElement("button");
-        editbutton.textContent = "Edit";
-        editbutton.className = "Edit-button";
-        editbutton.addEventListener("click", function () { edittask(taskvalue); })
+// Function to add a to-do
+function addTodo() {
+    const todoText = todoInput.value;
+    if (todoText === '') return;
 
-        var deletebutton = document.createElement("button");
-        deletebutton.textContent = "delete";
-        deletebutton.className = "Delete-button";
-        deletebutton.addEventListener("click", function () { deletetask(taskitem); })
+    // Add the to-do to the array
+    todos.push(todoText);
 
-        // add elements to the task item div than to container : 
-        taskitem.appendChild(taskvalue);
-        taskitem.appendChild(editbutton);
-        taskitem.appendChild(deletebutton);
-        const container = document.querySelector(".container")
-        container.appendChild(taskitem);
+    // Display the to-dos
+    displayTodos();
 
-    }
+    // Clear the input field
+    todoInput.value = ' ';
 }
 
-function edittask(taskvalue) {
-    var newtext = prompt("Edit-task", taskvalue.textContent); // ???????????
-    if (newtext !== "") {
-        taskvalue.textContent = newtext.trim();
-    }
+// Function to display the to-dos
+function displayTodos() {
+    // Clear the to-do container
+    todosContainer.innerHTML = '';
+
+    // Loop through the to-dos and create elements
+    todos.forEach((todo, index) => {
+        const todoElement = document.createElement('div');
+        todoElement.textContent = todo;
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+            deleteTodo(index);
+        });
+
+        todoElement.appendChild(deleteButton);
+        todosContainer.appendChild(todoElement);
+    });
 }
 
-function deletetask(taskitem) {
-    taskitem.remove();
+// Function to delete a to-do
+function deleteTodo(index) {
+    todos.splice(index, 1);
+    displayTodos();
 }
