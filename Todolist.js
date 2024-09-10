@@ -6,6 +6,15 @@ const todosContainer = document.getElementById('todosContainer');
 // Array to store to-dos
 let todos = [];
 
+// Load to-dos from local storage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTodos = localStorage.getItem('todos');
+    if (savedTodos) {
+        todos = JSON.parse(savedTodos);
+        displayTodos();
+    }
+});
+
 // Event listener for form submission
 todoForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -19,6 +28,9 @@ function addTodo() {
 
     // Add the to-do to the array as an object with text and completion status
     todos.push({ text: todoText, completed: false });
+
+    // Save the updated todos to local storage
+    saveTodos();
 
     // Display the to-dos
     displayTodos();
@@ -45,10 +57,15 @@ function displayTodos() {
         // Checkbox for marking the to-do as completed
         const checkButton = document.createElement('button');
         checkButton.innerHTML = todo.completed
-            ? '<i class="fa-regular fa-circle-check" style="color: #3baa1d;"></i>'
-            : '<i class="fa-regular fa-circle" style="color: #fa0000;"></i>';
-            checkButton.style.backgroundColor = '#ffffff';
-            checkButton.addEventListener('click', () => {
+            ? '<i class="fa-regular fa-circle" style="color: #fa0000;"></i>'
+            : '<i class="fa-regular fa-circle-check" style="color: #3baa1d;"></i>';
+        checkButton.style.backgroundColor = '#ffffff';  // Set the background color to white
+        checkButton.style.border = 'none';              // Remove the border
+        checkButton.style.padding = '5px';              // Add some padding
+        checkButton.style.borderRadius = '5px';         // Add border radius for rounded corners
+        checkButton.style.cursor = 'pointer';           // Change the cursor to a pointer on hover
+
+        checkButton.addEventListener('click', () => {
             toggleComplete(index);
         });
 
@@ -73,9 +90,15 @@ function displayTodos() {
     });
 }
 
+// Function to save to-dos to local storage
+function saveTodos() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
 // Function to delete a to-do
 function deleteTodo(index) {
     todos.splice(index, 1);
+    saveTodos(); // Save updated todos to local storage
     displayTodos();
 }
 
@@ -84,6 +107,7 @@ function editTodo(index) {
     const newTodoText = prompt('Edit your to-do:', todos[index].text);
     if (newTodoText !== null && newTodoText.trim() !== '') {
         todos[index].text = newTodoText.trim();
+        saveTodos(); // Save updated todos to local storage
         displayTodos();
     }
 }
@@ -91,5 +115,6 @@ function editTodo(index) {
 // Function to toggle the completion status of a to-do
 function toggleComplete(index) {
     todos[index].completed = !todos[index].completed;
+    saveTodos(); // Save updated todos to local storage
     displayTodos();
 }

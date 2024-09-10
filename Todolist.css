@@ -23,9 +23,7 @@ margin-top: 2em;
 #todoInput{
   padding: 1em;
  }
-#checkButton{
-  background-color: white;
-}
+
 @media screen and (max-width: 322PX) {
   body {
     background-color: 0084FF;
